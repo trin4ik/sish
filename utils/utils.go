@@ -1052,6 +1052,14 @@ func GetOpenAlias(addr string, port string, state *State, sshConn *SSHConnection
 				return false
 			}
 
+			if viper.GetBool("debug") {
+				log.Printf("Opening alias: %s\n", alias)
+				log.Printf("bind-random-aliases: %s\n", viper.GetBool("bind-random-aliases"))
+				log.Printf("first: %v\n", first)
+				log.Printf("InList: %v\n", InList(alias, bannedAliasList))
+				log.Printf("bannedAliasList: %v\n", bannedAliasList)
+			}
+
 			if viper.GetBool("bind-random-aliases") || !first || inList(alias, bannedAliasList) {
 				reportUnavailable(true)
 				alias = getRandomAlias()
